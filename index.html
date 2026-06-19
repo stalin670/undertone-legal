@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undertone — Legal Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(22, 30, 49, 0.7);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+      --primary: #3b82f6;
+      --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #8b5cf6 50%, #ec4899 100%);
+      --surface: #1e293b;
+      --error: #ef4444;
+      --success: #10b981;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+    
+    header {
+      background: rgba(11, 15, 25, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+    }
+    
+    .header-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+    
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+    
+    .logo-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      color: var(--text-dim);
+    }
+    
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-dim);
+      padding: 0.5rem 1.2rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .tab-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    
+    .tab-btn.active {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--border);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    main {
+      flex: 1;
+      max-width: 800px;
+      width: 100%;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+    
+    .content-section {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .content-section.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+    
+    .meta-date {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+    
+    h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.2rem 0 1rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    
+    p {
+      color: var(--text-dim);
+      margin-bottom: 1.25rem;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+    
+    ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-dim);
+    }
+    
+    li {
+      margin-bottom: 0.65rem;
+      font-size: 0.95rem;
+    }
+    
+    .contact-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-top: 2rem;
+    }
+    
+    /* Form elements */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+    
+    input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 0.85rem 1.1rem;
+      background: rgba(11, 15, 25, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      margin: 2rem 0;
+    }
+    
+    .checkbox-group input {
+      margin-top: 0.25rem;
+      width: 18px;
+      height: 18px;
+      accent-color: #6366f1;
+      cursor: pointer;
+    }
+    
+    .checkbox-group label {
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--text-dim);
+      font-size: 0.95rem;
+    }
+    
+    .btn {
+      background: var(--primary-gradient);
+      color: white;
+      border: none;
+      padding: 0.9rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 100%;
+      display: inline-block;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+    }
+    
+    .btn:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    
+    .btn.destructive {
+      background: var(--error);
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);
+    }
+    
+    .btn.destructive:hover {
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+    }
+    
+    .alert {
+      padding: 1.25rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      font-weight: 500;
+      display: none;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    .alert.error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid var(--error);
+      color: #fca5a5;
+      display: block;
+    }
+    
+    .alert.success {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid var(--success);
+      color: #6ee7b7;
+      display: block;
+    }
+    
+    .danger-box {
+      border: 1px dashed rgba(239, 68, 68, 0.3);
+      padding: 2rem;
+      border-radius: 12px;
+      background: rgba(239, 68, 68, 0.03);
+      margin-top: 2rem;
+    }
+    
+    footer.page-footer {
+      text-align: center;
+      padding: 2.5rem;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      background: rgba(11, 15, 25, 0.5);
+      margin-top: auto;
+    }
+    
+    /* Loading spinner */
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+      margin-right: 0.6rem;
+      vertical-align: middle;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .hidden {
+      display: none !important;
+    }
+    
+    .logged-in-user {
+      font-weight: 700;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+    
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem;
+      }
+      .header-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      main {
+        margin: 1.5rem auto;
+      }
+      .content-section {
+        padding: 1.75rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <a href="#" class="logo-container" onclick="event.preventDefault(); switchTab('privacy')">
+        <span class="logo">Undertone</span>
+        <span class="logo-badge">Legal</span>
+      </a>
+      <nav class="tabs">
+        <button class="tab-btn" data-tab="privacy" onclick="switchTab('privacy')">Privacy Policy</button>
+        <button class="tab-btn" data-tab="terms" onclick="switchTab('terms')">Terms & Conditions</button>
+        <button class="tab-btn" data-tab="account-deletion" onclick="switchTab('account-deletion')">Delete Account</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Privacy Policy Section -->
+    <section id="privacy" class="content-section">
+      <h1>Privacy Policy</h1>
+      <div class="meta-date">Last Updated: June 14, 2026</div>
+      
+      <p>Undertone is committed to protecting your privacy. This Privacy Policy describes how we collect, use, process, and share your data when you use the Undertone mobile application.</p>
+      
+      <h2>1. Information We Collect and Process</h2>
+      <p>Undertone is designed with data minimization and user privacy in mind. We collect and process the following categories of data:</p>
+      <ul>
+        <li><strong>Biometric Ephemeral Scans (Photos):</strong> Undertone uses your device camera to analyze skin appearance and determine personal color harmony. When you perform a scan, your photo is sent securely over HTTPS to our server-side analysis providers (Supabase and Gemini) for ephemeral processing. <strong>Undertone does not store raw photos or facial templates on any server or disk.</strong> Photos live only in request memory and are discarded immediately after analysis.</li>
+        <li><strong>Glow-Up Photos:</strong> Photos uploaded to the optional Glow-Up feature are sent for image generation, and the resulting before/after images are transiently processed in app memory. They are not stored on our servers and are deleted unless you explicitly save or share them outside the app.</li>
+        <li><strong>Derived Local Data:</strong> All analysis metrics (undertone mix, confidence levels, skin appearance scores, face shape and feature labels, routines, habits, scan history, skin type, skin tone, self-reported ethnicity/background, gender/makeup preference, app language, and theme) are saved <strong>only locally</strong> on your device. We do not sync these details to a central user database.</li>
+        <li><strong>Account Data:</strong> If you create an account, we store your email address, Supabase user ID, and secure authentication tokens.</li>
+        <li><strong>Purchase Data:</strong> We utilize RevenueCat and Google Play to manage subscription entitlements. We process transaction identifiers, payment timestamps, and subscription statuses, but we do not collect or store credit card details.</li>
+        <li><strong>Device Identifiers:</strong> We collect a random install ID and a RevenueCat app-user ID to perform rate limiting, manage entitlements, prevent abuse or fraud, and maintain service functionality.</li>
+      </ul>
+ 
+      <h2>2. Data Sharing and Transfer</h2>
+      <p>We do not sell, rent, or trade your personal or sensitive user data. We share data only in the following necessary circumstances:</p>
+      <ul>
+        <li><strong>Service Providers:</strong> We transmit photos and textual parameters to Supabase and Gemini (via HTTPS) to generate color and cosmetic styling guidance. These providers act as data processors bound by strict security and confidentiality obligations.</li>
+        <li><strong>Legal Compliance:</strong> We may disclose user data if required to do so by law or in the good-faith belief that such action is necessary to comply with legal processes or protect public safety.</li>
+      </ul>
+ 
+      <h2>3. Data Retention and Deletion</h2>
+      <p>You have full control over your data:</p>
+      <ul>
+        <li><strong>Reset Local Data:</strong> You can completely erase your local scan history, habits, and preferences at any time by navigating to Settings → Reset Data inside the app.</li>
+        <li><strong>Account Deletion:</strong> You can delete your account and all associated authentication data immediately from the Settings page inside the app or by using our public deletion portal (available on this site under the "Delete Account" tab).</li>
+        <li><strong>Subscriptions:</strong> Subscriptions are billed and managed directly through Google Play and must be canceled there. Uninstalling the app or deleting your account will not automatically cancel a subscription.</li>
+      </ul>
+ 
+      <h2>4. Cosmetic-Only Limitation</h2>
+      <p>Undertone provides personal color analysis, cosmetic skin-appearance tracking, and general wellness guidance. <strong>It does not provide medical advice, diagnosis, or treatment, and it is not a medical device.</strong> Always consult a qualified dermatologist or healthcare provider for medical concerns.</p>
+      
+      <div class="contact-card">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or suggestions regarding our privacy practices, please contact us at:</p>
+        <p><strong>Email:</strong> privacy@stalin670-undertone.com</p>
+        <p><strong>Developer:</strong> Undertone Dev Team</p>
+      </div>
+    </section>
+
+    <!-- Terms & Conditions Section -->
+    <section id="terms" class="content-section">
+      <h1>Terms & Conditions</h1>
+      <div class="meta-date">Last Updated: June 14, 2026</div>
+      
+      <p>By downloading or using the Undertone mobile application, you agree to these Terms & Conditions. Please read them carefully.</p>
+      
+      <h2>1. Description of Service</h2>
+      <p>Undertone is an application that uses advanced image analysis to offer style, color season, makeup harmony, and face fitness ritual suggestions. The app and its contents are for personal, cosmetic, and non-commercial use only.</p>
+ 
+      <h2>2. Recommendations and Disclaimers</h2>
+      <ul>
+        <li><strong>Guidance Only:</strong> The analysis, color suggestions, and makeup advice are cosmetic and style recommendations. They depend heavily on lighting, camera quality, makeup, filters, and user input.</li>
+        <li><strong>Not Medical Advice:</strong> Undertone does not diagnose skin conditions, recommend clinical treatments, or serve as a medical tool. Face fitness, routines, and skincare suggestions are for general wellness. Stop any exercise or application immediately if discomfort, redness, or pain occurs, and consult a qualified medical professional.</li>
+      </ul>
+ 
+      <h2>3. Subscriptions and Billing</h2>
+      <ul>
+        <li><strong>Auto-Renewal:</strong> Paid premium plans (weekly, monthly, or annual) auto-renew at the end of the billing period unless canceled.</li>
+        <li><strong>Cancellation:</strong> You must cancel your subscription through your Google Play Store account settings. Deleting the app or your account does not cancel your subscription.</li>
+        <li><strong>Refunds:</strong> All transaction handling and refund requests are governed by Google Play Store terms.</li>
+      </ul>
+ 
+      <h2>4. Acceptable Use and Restrictions</h2>
+      <p>You agree not to attempt to extract the source code of the app, scrape data, modify the application, reverse engineer its features, or abuse the API endpoints (including making bulk automated requests). We reserve the right to suspend or terminate access to our services for users who violate these terms.</p>
+ 
+      <div class="contact-card">
+        <h2>Agreement</h2>
+        <p>Your continued use of the Undertone application signifies your agreement to these terms. If you do not agree, you must uninstall the app and cease using the service.</p>
+      </div>
+    </section>
+
+    <!-- Account Deletion Section -->
+    <section id="account-deletion" class="content-section">
+      <h1>Delete Account</h1>
+      <div class="meta-date">Submit a request to delete your account</div>
+      
+      <p>Pursuant to Google Play policy, if your Undertone account was created in the app, you may delete it at any time. Deleting your account will permanently erase your authentication records and associated login credentials. Local data on your device can be reset inside the app settings.</p>
+
+      <div id="auth-alert" class="alert"></div>
+
+      <!-- Step 1: Authentication Form -->
+      <form id="auth-form" onsubmit="handleSignIn(event)">
+        <p>To request account deletion, please sign in with your credentials to verify your identity.</p>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" required autocomplete="email" placeholder="you@example.com">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required autocomplete="current-password" placeholder="••••••••">
+        </div>
+        
+        <button type="submit" id="signin-btn" class="btn">Sign In to Proceed</button>
+      </form>
+
+      <!-- Step 2: Confirmation Section (hidden by default) -->
+      <div id="confirm-section" class="hidden">
+        <div id="delete-alert" class="alert"></div>
+        
+        <p>Signed in as: <span id="user-email" class="logged-in-user"></span></p>
+        
+        <div class="danger-box">
+          <h2>Warning: Action Cannot Be Undone</h2>
+          <p>Confirming deletion will instantly delete your credentials from our authentication system. You will lose access to Undertone immediately. If you have active subscriptions, you must cancel them separately in the Google Play Store.</p>
+          
+          <div class="checkbox-group">
+            <input type="checkbox" id="confirm-checkbox">
+            <label for="confirm-checkbox">I understand that this action is permanent and my account details cannot be recovered.</label>
+          </div>
+          
+          <button type="button" id="delete-btn" class="btn destructive" onclick="handleDeleteAccount()">Permanently Delete My Account</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    &copy; 2026 Undertone. All rights reserved.
+  </footer>
+
+  <script>
+    const supabaseUrl = 'https://ajiokuoxmxceufkzjuwc.supabase.co';
+    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFqaW9rdW94bXhjZXVma3pqdXdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1NzY0MTAsImV4cCI6MjA5NjE1MjQxMH0.DerUNuufaNEBLyag-lVu6zEOcRsEHr-RQJ12hSfqQT0';
+    let userSession = null;
+
+    const authAlert = document.getElementById('auth-alert');
+    const deleteAlert = document.getElementById('delete-alert');
+    const authForm = document.getElementById('auth-form');
+    const confirmSection = document.getElementById('confirm-section');
+    const userEmailSpan = document.getElementById('user-email');
+
+    const activeTab = 'privacy';
+
+    // Tab Switching
+    function switchTab(tabId, updateUrl = true) {
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      const section = document.getElementById(tabId);
+      const btn = document.querySelector(`[data-tab="${tabId}"]`);
+      
+      if (section && btn) {
+        section.classList.add('active');
+        btn.classList.add('active');
+      }
+      
+      if (updateUrl) {
+        location.hash = tabId;
+      }
+    }
+
+    // Get tab ID from hash
+    function getTabFromHash() {
+      const hash = location.hash;
+      if (hash === '#terms') return 'terms';
+      if (hash === '#account-deletion') return 'account-deletion';
+      return activeTab;
+    }
+
+    // Handle initial routing based on URL
+    window.addEventListener('load', () => {
+      const initialTab = getTabFromHash();
+      switchTab(initialTab, false);
+    });
+
+    window.addEventListener('hashchange', () => {
+      const tabId = getTabFromHash();
+      switchTab(tabId, false);
+    });
+
+    // Sign in handling
+    async function handleSignIn(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('signin-btn');
+      
+      if (!email || !password) {
+        showAuthAlert('Please fill in all fields.', 'error');
+        return;
+      }
+      
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Signing In...';
+      showAuthAlert('', 'hide');
+      
+      try {
+        const res = await fetch(`${supabaseUrl}/auth/v1/token?grant_type=password`, {
+          method: 'POST',
+          headers: {
+            'apikey': supabaseAnonKey,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+        
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error_description || data.error || 'Failed to authenticate.');
+        }
+        
+        userSession = data;
+        userEmailSpan.textContent = email;
+        authForm.classList.add('hidden');
+        confirmSection.classList.remove('hidden');
+      } catch (err) {
+        showAuthAlert(err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Sign In to Proceed';
+      }
+    }
+
+    // Account deletion handling
+    async function handleDeleteAccount() {
+      const checkbox = document.getElementById('confirm-checkbox');
+      const btn = document.getElementById('delete-btn');
+      
+      if (!checkbox.checked) {
+        showDeleteAlert('You must check the confirmation box to proceed.', 'error');
+        return;
+      }
+      
+      if (!userSession || !userSession.access_token) {
+        showDeleteAlert('No active session. Please reload and sign in again.', 'error');
+        return;
+      }
+      
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Deleting Account...';
+      showDeleteAlert('', 'hide');
+      
+      try {
+        const res = await fetch(`${supabaseUrl}/functions/v1/account-delete`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userSession.access_token}`
+          },
+          body: JSON.stringify({ confirm: true })
+        });
+        
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Failed to delete account.');
+        }
+        
+        showDeleteAlert('Your account and all associated data have been permanently deleted.', 'success');
+        confirmSection.classList.add('hidden');
+        userSession = null;
+      } catch (err) {
+        showDeleteAlert(err.message, 'error');
+        btn.disabled = false;
+        btn.textContent = 'Permanently Delete My Account';
+      }
+    }
+
+    function showAuthAlert(msg, type) {
+      if (type === 'hide') {
+        authAlert.className = 'alert';
+        authAlert.textContent = '';
+      } else {
+        authAlert.className = `alert ${type}`;
+        authAlert.textContent = msg;
+      }
+    }
+
+    function showDeleteAlert(msg, type) {
+      if (type === 'hide') {
+        deleteAlert.className = 'alert';
+        deleteAlert.textContent = '';
+      } else {
+        deleteAlert.className = `alert ${type}`;
+        deleteAlert.textContent = msg;
+      }
+    }
+  </script>
+</body>
+</html>
