@@ -376,7 +376,7 @@
 
   <main>
     <!-- Privacy Policy Section -->
-    <section id="privacy" class="content-section">
+    <section id="panel-privacy" class="content-section">
       <div class="section-accent"></div>
       <h1>Privacy Policy</h1>
       <div class="meta-date">Last updated: June 14, 2026</div>
@@ -417,7 +417,7 @@
     </section>
 
     <!-- Terms & Conditions Section -->
-    <section id="terms" class="content-section">
+    <section id="panel-terms" class="content-section">
       <div class="section-accent"></div>
       <h1>Terms &amp; Conditions</h1>
       <div class="meta-date">Last updated: June 14, 2026</div>
@@ -450,7 +450,7 @@
     </section>
 
     <!-- Account Deletion Section -->
-    <section id="account-deletion" class="content-section">
+    <section id="panel-account-deletion" class="content-section">
       <div class="section-accent"></div>
       <h1>Delete account</h1>
       <div class="meta-date">Request permanent deletion of your account</div>
@@ -523,7 +523,7 @@
         btn.classList.remove('active');
       });
 
-      const section = document.getElementById(tabId);
+      const section = document.getElementById('panel-' + tabId);
       const btn = document.querySelector(`[data-tab="${tabId}"]`);
 
       if (section && btn) {
@@ -548,6 +548,7 @@
     window.addEventListener('load', () => {
       const initialTab = getTabFromHash();
       switchTab(initialTab, false);
+      window.scrollTo(0, 0);
     });
 
     window.addEventListener('hashchange', () => {
