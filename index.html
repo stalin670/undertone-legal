@@ -34,7 +34,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-padding-top: 96px; }
 
     body {
       background-color: var(--bg);
@@ -502,6 +502,10 @@
   </footer>
 
   <script>
+    // Always open at the top, never restore a prior scroll position or jump to a hash.
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+
     const supabaseUrl = 'https://ajiokuoxmxceufkzjuwc.supabase.co';
     const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFqaW9rdW94bXhjZXVma3pqdXdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1NzY0MTAsImV4cCI6MjA5NjE1MjQxMH0.DerUNuufaNEBLyag-lVu6zEOcRsEHr-RQJ12hSfqQT0';
     let userSession = null;
@@ -544,12 +548,17 @@
       return activeTab;
     }
 
-    // Handle initial routing based on URL
-    window.addEventListener('load', () => {
-      const initialTab = getTabFromHash();
-      switchTab(initialTab, false);
+    // Handle initial routing based on URL, and force the top of the page.
+    function initRoute() {
+      switchTab(getTabFromHash(), false);
       window.scrollTo(0, 0);
-    });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initRoute);
+    } else {
+      initRoute();
+    }
+    window.addEventListener('load', () => window.scrollTo(0, 0));
 
     window.addEventListener('hashchange', () => {
       const tabId = getTabFromHash();
